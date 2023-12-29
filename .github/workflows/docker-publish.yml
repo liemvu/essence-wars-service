@@ -38,12 +38,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: echo app port
-        run: echo ${{ vars.APP_PORT }}
-
-      - name: echo app port2
-        run: echo $APP_PORT
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -51,7 +45,7 @@ jobs:
           context: .
           push: true
           build-args: |
-            APP_PORT=${{ vars.APP_PORT }}}
+            APP_PORT=${{ vars.APP_PORT }}
           tags: | 
             ghcr.io/${{ github.repository }}:${{ steps.pkg.outputs.version }}
             ghcr.io/${{ github.repository }}:latest
