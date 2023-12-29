@@ -63,6 +63,7 @@ jobs:
           username: ${{ secrets.PRODUCTION_SERVER_USERNAME }}
           key: ${{ secrets.PRODUCTION_SERVER_PRIVATE_KEY }}
           port: ${{ secrets.PRODUCTION_SERVER_SSH_PORT }}
+          passphrase: ${{ secrets.PRODUCTION_SERVER_PASSPHRASE }}
           script: |
             docker pull ghcr.io/${{ github.repository }}:latest
             docker stop ${{ vars.SERVICE_NAME }} || true
