@@ -1,34 +1,37 @@
 # Use an official Node runtime as the base image
 FROM node:18
 
+# Set the environment variable APP_PORT
+ENV APP_PORT=3000
+
+RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+
 # Set the working directory in the container to /app
-WORKDIR /app
-
-RUN useradd -m node
-
-USER node
+WORKDIR /home/node/app
 
 # Copy package.json and package-lock.json into the directory /app in the container
 COPY package*.json ./
 
+USER node
+
 # Install all the dependencies
-RUN node install
+RUN yarn install
 
 # If you are building your code for production
 # RUN npm ci --only=production
 
-USER root
+# USER root
 
 # Bundle app source inside the docker image
-COPY . .
+COPY --chown=node:node . .
 
-# Change ownership of /app directory to appuser
-RUN chown -R node:node /app
+# Change ownership of /home/node/app directory to appuser
+# RUN chown -R node:node /home/node/app
 
-USER node
+# USER appuser
 
 # Your app binds to port 3000 so you'll use the EXPOSE instruction to have it mapped by the docker daemon
-EXPOSE 3000
+EXPOSE ${APP_PORT}
 
 # Define the command to run your app using CMD which defines your runtime
-CMD [ "node", "run", "start" ]
+CMD [ "yarn", "run", "start" ]
