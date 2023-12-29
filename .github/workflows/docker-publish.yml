@@ -46,6 +46,7 @@ jobs:
           push: true
           build-args: |
             APP_PORT=${{ vars.APP_PORT }}
+            GOOGLE_SERVICE_ACCOUNT=${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
           tags: | 
             ghcr.io/${{ github.repository }}:${{ steps.pkg.outputs.version }}
             ghcr.io/${{ github.repository }}:latest
@@ -64,6 +65,7 @@ jobs:
           key: ${{ secrets.PRODUCTION_SERVER_PRIVATE_KEY }}
           port: ${{ secrets.PRODUCTION_SERVER_SSH_PORT }}
           passphrase: ${{ secrets.PRODUCTION_SERVER_PASSPHRASE }}
+          command_timeout: 30m
           script: |
             docker pull ghcr.io/${{ github.repository }}:latest
             docker stop ${{ vars.SERVICE_NAME }} || true
