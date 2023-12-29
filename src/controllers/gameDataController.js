@@ -13,9 +13,9 @@ const rangesMap = {
 
 function getServiceAccount() {
     if (process.env.NODE_ENV === 'production') {
-        return JSON.parse(process.env.google_service_account);
+        return JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT);
     } else {
-        return require('../../res/essencewars-409308-9a1b8e468a56.json');
+        return require('../../res/keys/essencewars-409308-ebed1c3b4a4a.json');
     }
 }
 

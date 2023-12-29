@@ -3,10 +3,10 @@ services:
   app:
     environment:
       - NODE_ENV=development
-      - APP_PORT=3000
+      - APP_PORT=30001
     build: .
     ports:
-      - "3000:3000"
+      - "30001:30001"
     volumes:
       - .:/home/node/app
       - /home/node/app/node_modules

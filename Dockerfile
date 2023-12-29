@@ -2,7 +2,7 @@
 FROM node:18
 
 # Set the environment variable APP_PORT
-ENV APP_PORT=3000
+ENV APP_PORT=30001
 
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
