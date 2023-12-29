@@ -40,7 +40,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       
       - name: echo app port
-        run: echo ${{ env.APP_PORT }}
+        run: echo ${{ vars.APP_PORT }}
 
       - name: echo app port2
         run: echo $APP_PORT
@@ -51,7 +51,7 @@ jobs:
           context: .
           push: true
           build-args: |
-            APP_PORT=${{ env.APP_PORT }}}
+            APP_PORT=${{ vars.APP_PORT }}}
           tags: | 
             ghcr.io/${{ github.repository }}:${{ steps.pkg.outputs.version }}
             ghcr.io/${{ github.repository }}:latest
@@ -71,7 +71,7 @@ jobs:
           port: ${{ secrets.PRODUCTION_SERVER_SSH_PORT }}
           script: |
             docker pull ghcr.io/${{ github.repository }}:latest
-            docker stop ${{ env.SERVICE_NAME }} || true
-            docker rm ${{ env.SERVICE_NAME }} || true
-            docker run --name ${{ env.SERVICE_NAME }} -d -p ${{ env.APP_PORT }}:${{ env.APP_PORT }} ghcr.io/${{ github.repository }}:latest
+            docker stop ${{ vars.SERVICE_NAME }} || true
+            docker rm ${{ vars.SERVICE_NAME }} || true
+            docker run --name ${{ vars.SERVICE_NAME }} -d -p ${{ vars.APP_PORT }}:${{ vars.APP_PORT }} ghcr.io/${{ github.repository }}:latest
   
