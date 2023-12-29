@@ -3,8 +3,10 @@ services:
   app:
     environment:
       - NODE_ENV=development
-      - APP_PORT=30001
-    build: .
+    build:
+      context: .
+      args:
+        - APP_PORT=30001
     ports:
       - "30001:30001"
     volumes:

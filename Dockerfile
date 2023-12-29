@@ -1,8 +1,9 @@
 # Use an official Node runtime as the base image
 FROM node:18
+ARG APP_PORT
 
 # Set the environment variable APP_PORT
-ENV APP_PORT=30001
+ENV APP_PORT=${APP_PORT}
 
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 

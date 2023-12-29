@@ -46,5 +46,5 @@ function setupExpress() {
 setupEnvironmentVariables();
 setupLogging();
 setupExpress();
-console.log(process.env.APP_PORT_2)
+
 module.exports = app; // for testing

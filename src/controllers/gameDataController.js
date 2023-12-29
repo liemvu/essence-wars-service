@@ -31,9 +31,19 @@ function tryParseValue(value) {
     return parseFloat(value);
 }
 
+exports.processData = (rows) => {
+    const keys = rows[0];
+    return rows.slice(1).map(row => {
+        let obj = {};
+        keys.forEach((key, i) => {
+            let value = row[i];
+            obj[key] = tryParseValue(value);
+        });
+        return obj;
+    });
+};
+
 exports.getGameDataByKey = async (req, res, next) => {
-
-
     try {
         const {
             key
@@ -62,17 +72,7 @@ exports.getGameDataByKey = async (req, res, next) => {
 
         // Convert the Google Sheets data to JSON.
         const rows = response.data.values;
-        const keys = rows[0];
-        const data = rows.slice(1).map(row => {
-            let obj = {};
-            keys.forEach((key, i) => {
-                let value = row[i];
-                obj[key] = tryParseValue(value);
-            });
-            return obj;
-        });
-
-        console.log('rows', data);
+        const data = processData(rows);
 
         res.json({
             key,

@@ -12,9 +12,11 @@
   },
   "scripts": {
     "dev": "nodemon src/app.js",
-    "start": "NODE_ENV=production node src/app.js"
+    "start": "NODE_ENV=production node src/app.js",
+    "test": "jest"
   },
   "devDependencies": {
+    "jest": "^29.7.0",
     "nodemon": "^3.0.2"
   }
 }
