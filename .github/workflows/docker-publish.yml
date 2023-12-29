@@ -5,6 +5,9 @@ concurrency:
   cancel-in-progress: true
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       deploy_to_production: 
@@ -35,6 +38,12 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: echo app port
+        run: echo ${{ env.APP_PORT }}
+
+      - name: echo app port2
+        run: echo $APP_PORT
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
