@@ -6,10 +6,10 @@ ARG GOOGLE_SERVICE_ACCOUNT
 # Set the environment variable APP_PORT
 ENV APP_PORT=${APP_PORT}
 ENV GOOGLE_SERVICE_ACCOUNT=${GOOGLE_SERVICE_ACCOUNT}
-# ENV LOG_FOLDER=/home/node/app/logs
+ENV LOG_FOLDER=/home/node/app/logs
 
 RUN mkdir -p /home/node/app/node_modules \ 
-  mkdir -p /home/node/app/logs \ 
+  mkdir -p ${LOG_FOLDER} \ 
   && chown -R node:node /home/node/app
 
 # Set the working directory in the container to /app
