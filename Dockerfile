@@ -8,7 +8,9 @@ ENV APP_PORT=${APP_PORT}
 ENV GOOGLE_SERVICE_ACCOUNT=${GOOGLE_SERVICE_ACCOUNT}
 # ENV LOG_FOLDER=/home/node/app/logs
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+RUN mkdir -p /home/node/app/node_modules \ 
+  mkdir -p /home/node/app/logs \ 
+  && chown -R node:node /home/node/app
 
 # Set the working directory in the container to /app
 WORKDIR /home/node/app
