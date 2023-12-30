@@ -9,7 +9,7 @@ ENV GOOGLE_SERVICE_ACCOUNT=${GOOGLE_SERVICE_ACCOUNT}
 ENV LOG_FOLDER=/home/node/app/logs
 
 RUN mkdir -p /home/node/app/node_modules \ 
-  mkdir -p ${LOG_FOLDER} \ 
+  && mkdir -p ${LOG_FOLDER} \ 
   && chown -R node:node /home/node/app
 
 # Set the working directory in the container to /app
@@ -22,6 +22,11 @@ USER node
 
 # Install all the dependencies
 RUN yarn install
+
+# Copy the rest of your app's source code from your host to your image filesystem
+RUN  mkdir -p res/keys \ 
+  && echo ${GOOGLE_SERVICE_ACCOUNT} > /home/node/app/google-service-account.json \
+  && cat ${APP_PORT} > .env
 
 # If you are building your code for production
 # RUN npm ci --only=production

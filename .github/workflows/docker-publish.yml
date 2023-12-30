@@ -68,6 +68,7 @@ jobs:
           command_timeout: 30m
           script: |
             mkdir -p /var/log/${{ vars.SERVICE_NAME }}
+            chomd 777 /var/log/${{ vars.SERVICE_NAME }}
             docker pull ghcr.io/${{ github.repository }}:latest
             docker stop ${{ vars.SERVICE_NAME }} || true
             docker rm ${{ vars.SERVICE_NAME }} || true
