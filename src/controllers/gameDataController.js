@@ -1,7 +1,7 @@
 
 const { google } = require('googleapis');
 const { ApiError } = require('../middlewares/errorHandler');
-
+const { logger } = require('../middlewares/logger');
 
 
 const spreadsheetId = '1Wn6gNfI77vK4Zs8TReQPzS4yUBe9yyEV843QHVJn8cY';
@@ -13,6 +13,7 @@ const rangesMap = {
 
 function getServiceAccount() {
     if (process.env.NODE_ENV === 'production') {
+        logger.info("Using google service account from env", process.env.GOOGLE_SERVICE_ACCOUNT);
         return JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT);
     } else {
         return require('../../res/keys/essencewars-409308-ebed1c3b4a4a.json');
@@ -31,7 +32,7 @@ function tryParseValue(value) {
     return parseFloat(value);
 }
 
-exports.processData = (rows) => {
+function processData(rows) {
     const keys = rows[0];
     return rows.slice(1).map(row => {
         let obj = {};
@@ -41,7 +42,8 @@ exports.processData = (rows) => {
         });
         return obj;
     });
-};
+}
+exports.processData = processData;
 
 exports.getGameDataByKey = async (req, res, next) => {
     try {
@@ -73,6 +75,8 @@ exports.getGameDataByKey = async (req, res, next) => {
         // Convert the Google Sheets data to JSON.
         const rows = response.data.values;
         const data = processData(rows);
+
+        logger.info("data: ", data);
 
         res.json({
             key,

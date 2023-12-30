@@ -4,7 +4,10 @@ exports.errorHandleMiddleware = function (err, req, res, next) {
   const statusCode = err.statusCode || 500;
   const status = err.status || 'internal_server_error';
   const message = err.message || 'Internal Server Error';
-  const info = err.info || {};
+  const info = err.info || {
+    stack: err.stack,
+  };
+
   res.status(statusCode).json({
     status: status,
     message,

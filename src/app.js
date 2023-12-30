@@ -3,10 +3,8 @@ const dotenv = require('dotenv');
 const express = require('express');
 const gameDataRoutes = require('./routes/gameDataRoutes');
 const { errorHandleMiddleware } = require('./middlewares/errorHandler');
-const morgan = require('morgan');
-const fs = require('fs');
+const { loggerMiddleware } = require('./middlewares/logger');
 const app = express();
-const path = require('path');
 
 function setupEnvironmentVariables() {
   // Load base environment variables
@@ -19,15 +17,7 @@ function setupEnvironmentVariables() {
 }
 
 function setupLogging() {
-  if (process.env.NODE_ENV === 'production') {
-    // Use morgan to log to a file in production
-    // create a write stream (in append mode)
-    var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
-    app.use(morgan('combined', { stream: accessLogStream }));
-  } else {
-    // Log to the console in development
-    app.use(morgan('dev'));
-  }
+  app.use(loggerMiddleware())
 }
 
 function setupExpress() {

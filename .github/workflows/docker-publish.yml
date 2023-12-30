@@ -56,7 +56,7 @@ jobs:
     needs: push_to_registry
     environment: production
     runs-on: ubuntu-latest
-    steps:
+    steps:        
       - name: Execute deployment commands over SSH
         uses: appleboy/ssh-action@v1.0.1
         with:
@@ -67,8 +67,9 @@ jobs:
           passphrase: ${{ secrets.PRODUCTION_SERVER_PASSPHRASE }}
           command_timeout: 30m
           script: |
+            mkdir -p /var/log/${{ vars.SERVICE_NAME }}
             docker pull ghcr.io/${{ github.repository }}:latest
             docker stop ${{ vars.SERVICE_NAME }} || true
             docker rm ${{ vars.SERVICE_NAME }} || true
-            docker run --name ${{ vars.SERVICE_NAME }} -d -p ${{ vars.APP_PORT }}:${{ vars.APP_PORT }} ghcr.io/${{ github.repository }}:latest
+            docker run --name ${{ vars.SERVICE_NAME }} -d -p ${{ vars.APP_PORT }}:${{ vars.APP_PORT }} -v /var/log/${{ vars.SERVICE_NAME }}:/home/node/app/logs ghcr.io/${{ github.repository }}:latest
   
