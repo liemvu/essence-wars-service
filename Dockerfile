@@ -24,9 +24,9 @@ USER node
 RUN yarn install
 
 # Copy the rest of your app's source code from your host to your image filesystem
-RUN  mkdir -p res/keys \ 
-  && echo ${GOOGLE_SERVICE_ACCOUNT} > /home/node/app/google-service-account.json \
-  && cat ${APP_PORT} > .env
+RUN  mkdir -p res/keys
+RUN echo APP_PORT=${APP_PORT} >> /home/node/app/.env
+RUN if [ ! -f /home/node/app/google-service-account.json ]; then echo ${GOOGLE_SERVICE_ACCOUNT} > /home/node/app/google-service-account.json; fi
 
 # If you are building your code for production
 # RUN npm ci --only=production
