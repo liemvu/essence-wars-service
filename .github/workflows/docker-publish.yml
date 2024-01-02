@@ -46,7 +46,7 @@ jobs:
           push: true
           build-args: |
             APP_PORT=${{ vars.APP_PORT }}
-            GOOGLE_SERVICE_ACCOUNT=${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
+            GOOGLE_SERVICE_ACCOUNT_BASE64=${{ secrets.GOOGLE_SERVICE_ACCOUNT_BASE64 }}
           tags: | 
             ghcr.io/${{ github.repository }}:${{ steps.pkg.outputs.version }}
             ghcr.io/${{ github.repository }}:latest
