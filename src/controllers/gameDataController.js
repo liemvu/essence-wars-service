@@ -10,7 +10,8 @@ const rangesMap = {
     "warrior": "warrior!B1:P100",
     "archer": "archer!B1:H100",
     "tower": "tower!B1:G100",
-    "mage": "mage!B1:I100"
+    "mage": "mage!B1:I100",
+    "knight_lancer": "knight_lancer!B1:J100",
 }
 
 function getServiceAccount() {
