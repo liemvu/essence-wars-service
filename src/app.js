@@ -1,6 +1,8 @@
 
 const dotenv = require('dotenv');
 const express = require('express');
+const cors = require('cors');
+
 const gameDataRoutes = require('./routes/gameDataRoutes');
 const { errorHandleMiddleware } = require('./middlewares/errorHandler');
 const { loggerMiddleware } = require('./middlewares/logger');
@@ -21,6 +23,7 @@ function setupLogging() {
 }
 
 function setupExpress() {
+  app.use(cors()); // Enable CORS for all origins
   app.use(express.json());
   app.use('/game-data', gameDataRoutes);
 
